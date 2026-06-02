@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Senda del Tiempo | Ecos de Papel</title>
+    
+    <!-- Fuentes premium de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para iconografía artística -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Biblioteca Tailwind CSS para maquetación responsiva ágil -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CONFIGURACIÓN DE COLORES PERSONALIZADOS PARA TAILWIND -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: {
+                            DEFAULT: '#f5ece1', // Fondo de papel envejecido
+                            card: '#fdfbf7',   // Pergamino claro
+                        },
+                        sepia: {
+                            dark: '#2d2722',   // Tinta oscura
+                            muted: '#6b6055',  // Tinta desgastada
+                            border: '#dcd3c4'  // Unión de hojas
+                        },
+                        gold: {
+                            DEFAULT: '#c5a059', // Latón/Oro viejo
+                            hover: '#b38e4a'
+                        },
+                        olive: {
+                            DEFAULT: '#55624c', // Verde musgo/oliva
+                            hover: '#444f3d'
+                        }
+                    },
+                    fontFamily: {
+                        serifTitle: ['"Playfair Display"', 'serif'],
+                        serifBody: ['"Lora"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-image: radial-gradient(#dcd3c4 1px, transparent 1px);
+            background-size: 32px 32px;
+            scroll-behavior: smooth;
+        }
+
+        /* Efecto de marco concéntrico doble clásico */
+        .editorial-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px; bottom: 8px; left: 8px; right: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            pointer-events: none;
+            border-radius: 4px;
+        }
+
+        /* Personalización de la barra de scroll estilo pergamino */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5ece1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5a059;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b38e4a;
+        }
+
+        /* Clases de transición para el panel de contenido */
+        .fade-transition {
+            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+    </style>
+</head>
+<body class="font-serifBody text-sepia-dark bg-paper min-h-screen flex items-center justify-center p-4 md:p-8">
+
+    <div class="editorial-frame relative w-full max-w-6xl bg-paper-card border border-sepia-border rounded-md shadow-2xl p-6 md:p-12 overflow-hidden">
+        
+        <!-- Florones clásicos decorativos en las cuatro esquinas -->
+        <span class="absolute top-4 left-6 text-gold text-2xl opacity-60 pointer-events-none">❦</span>
+        <span class="absolute top-4 right-6 text-gold text-2xl opacity-60 pointer-events-none rotate-90">❦</span>
+        <span class="absolute bottom-4 left-6 text-gold text-2xl opacity-60 pointer-events-none -rotate-90">❦</span>
+        <span class="absolute bottom-4 right-6 text-gold text-2xl opacity-60 pointer-events-none rotate-180">❦</span>
+
+        <!-- CABECERA EDITORIAL -->
+        <header class="text-center mb-10 md:mb-14 relative z-10">
+            <span class="text-xs uppercase tracking-[0.3em] text-olive font-semibold mb-2 block">Bitácora de una Evolución</span>
+            <h1 class="font-serifTitle text-4xl md:text-5xl italic text-sepia-dark mb-4 leading-tight">La Senda de las Fábulas</h1>
+            <p class="text-sepia-muted max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+                El recorrido completo de nuestro proyecto escolar. Viaja a través de nuestras etapas, desde el estudio del pergamino antiguo hasta el renacimiento de la moraleja moderna.
+            </p>
+            <div class="flex items-center justify-center gap-4 mt-6">
+                <span class="h-[1px] w-16 bg-gold opacity-50"></span>
+                <span class="text-gold text-lg">✦</span>
+                <span class="h-[1px] w-16 bg-gold opacity-50"></span>
+            </div>
+        </header>
+
+        <!-- GRID PRINCIPAL DE DOBLE COLUMNA -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 relative z-10">
+            
+            <!-- COLUMNA IZQUIERDA: LA SENDA INTERACTIVA (Línea de Tiempo) -->
+            <aside class="lg:col-span-5 flex flex-col justify-between pr-0 lg:pr-4">
+                <h2 class="font-serifTitle text-xl text-olive font-semibold mb-8 border-b border-sepia-border pb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-scroll text-gold"></i> Estaciones del Proyecto
+                </h2>
+
+                <div class="relative pl-6 md:pl-8 border-l-2 border-sepia-border ml-3 flex flex-col gap-10 py-2">
+                    
+                    <!-- HITOS DE LA LÍNEA DE TIEMPO -->
+                    <!-- Hito 1 -->
+                    <div id="milestone-1" onclick="switchStage(1)" class="milestone-item group cursor-pointer relative transition-all duration-300">
+                        <!-- Nodo indicador en la línea -->
+                        <span class="absolute -left-[33px] md:-left-[41px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-sepia-border bg-paper-card group-hover:border-gold group-hover:scale-125 transition-all duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-gold transition-all duration-300"></span>
+                        </span>
+                        <!-- Contenido del botón hito -->
+                        <div class="bg-paper border border-sepia-border/60 hover:border-gold rounded p-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+                            <span class="text-xs font-semibold text-gold tracking-widest uppercase block mb-1">Fase I · Arqueología</span>
+                            <h3 class="font-serifTitle text-lg text-sepia-dark group-hover:text-olive transition-colors duration-300">Las Voces de la Raíz</h3>
+                        </div>
+                    </div>
+
+                    <!-- Hito 2 -->
+                    <div id="milestone-2" onclick="switchStage(2)" class="milestone-item group cursor-pointer relative transition-all duration-300">
+                        <span class="absolute -left-[33px] md:-left-[41px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-sepia-border bg-paper-card group-hover:border-gold group-hover:scale-125 transition-all duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-gold transition-all duration-300"></span>
+                        </span>
+                        <div class="bg-paper border border-sepia-border/60 hover:border-gold rounded p-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+                            <span class="text-xs font-semibold text-gold tracking-widest uppercase block mb-1">Fase II · Alquimia</span>
+                            <h3 class="font-serifTitle text-lg text-sepia-dark group-hover:text-olive transition-colors duration-300">La Metamorfosis Moral</h3>
+                        </div>
+                    </div>
+
+                    <!-- Hito 3 -->
+                    <div id="milestone-3" onclick="switchStage(3)" class="milestone-item group cursor-pointer relative transition-all duration-300">
+                        <span class="absolute -left-[33px] md:-left-[41px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-sepia-border bg-paper-card group-hover:border-gold group-hover:scale-125 transition-all duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-gold transition-all duration-300"></span>
+                        </span>
+                        <div class="bg-paper border border-sepia-border/60 hover:border-gold rounded p-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+                            <span class="text-xs font-semibold text-gold tracking-widest uppercase block mb-1">Fase III · Oficio</span>
+                            <h3 class="font-serifTitle text-lg text-sepia-dark group-hover:text-olive transition-colors duration-300">Páginas de Luz (Diseño)</h3>
+                        </div>
+                    </div>
+
+                    <!-- Hito 4 -->
+                    <div id="milestone-4" onclick="switchStage(4)" class="milestone-item group cursor-pointer relative transition-all duration-300">
+                        <span class="absolute -left-[33px] md:-left-[41px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-sepia-border bg-paper-card group-hover:border-gold group-hover:scale-125 transition-all duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-gold transition-all duration-300"></span>
+                        </span>
+                        <div class="bg-paper border border-sepia-border/60 hover:border-gold rounded p-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+                            <span class="text-xs font-semibold text-gold tracking-widest uppercase block mb-1">Fase IV · Vuelo</span>
+                            <h3 class="font-serifTitle text-lg text-sepia-dark group-hover:text-olive transition-colors duration-300">El Sello de Lacre Colectivo</h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- NOTA DE INTERACCIÓN / SELLO DE MARCA -->
+                <div class="mt-8 pt-4 border-t border-sepia-border/50 hidden lg:flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full border border-gold flex items-center justify-center text-gold text-lg select-none">
+                        <i class="fa-solid fa-feather"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-gold block font-semibold">Consejo de Lectura</span>
+                        <p class="text-xs text-sepia-muted">Pulsa cada fase para desplegar los pergaminos de resultados.</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA DERECHA: EL CÓDICE DE DETALLES Y AVANCES -->
+            <main class="lg:col-span-7 bg-paper-card border border-sepia-border/80 rounded p-6 md:p-8 shadow-inner relative min-h-[480px] flex flex-col justify-between">
+                
+                <!-- Fondo sutil de marca de agua de un libro -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none">
+                    <i class="fa-solid fa-book-open text-[18rem]"></i>
+                </div>
+
+                <!-- CONTENEDOR DE CONTENIDO CAMBIANTE (Manipulado con Javascript) -->
+                <div id="content-display" class="fade-transition opacity-100 transform translate-y-0 relative z-10">
+                    <!-- El contenido se inyecta dinámicamente mediante el script. A continuación el estado inicial (Fase I) -->
+                </div>
+
+                <!-- ÁREA DE CONTROL O METRICAS INFERIORES -->
+                <div id="progress-meter-area" class="mt-8 pt-6 border-t border-sepia-border relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
+                    <div class="flex items-center gap-2 text-sepia-muted">
+                        <i class="fa-regular fa-clock text-gold"></i>
+                        <span>Estado: <strong id="progress-status-label" class="text-olive uppercase">Fase Concluida</strong></span>
+                    </div>
+                    <div class="w-full sm:w-48 bg-sepia-border/40 h-1.5 rounded-full overflow-hidden">
+                        <div id="progress-bar-indicator" class="bg-gold h-full transition-all duration-700 ease-out" style="width: 25%;"></div>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script>
+        // BASE DE DATOS DE LAS ETAPAS DEL PROYECTO
+        const stagesData = {
+            1: {
+                kicker: "Fase I · Investigación de Textos",
+                title: "Las Voces de la Raíz",
+                desc: "Arqueología del pensamiento literario. Buceamos en los escritos originales de los maestros fabulistas del pasado para comprender la crudeza, el ingenio y el contexto social de sus advertencias.",
+                quote: "«Las fábulas no son solo historias infantiles; son advertencias escritas con sangre histórica para la supervivencia común.» — Esopo",
+                outcomes: [
+                    { label: "Fábulas Analizadas", value: "15 Manuscritos" },
+                    { label: "Autores Comparados", value: "Esopo, La Fontaine, Samaniego" },
+                    { label: "Moralejas Catalogadas", value: "Supervivencia, Astucia, Justicia" }
+                ],
+                achievement: "Descubrimiento de 3 versiones perdidas de la moraleja de 'La Cigarra y la Hormiga' antes de su dulcificación moderna."
+            },
+            2: {
+                kicker: "Fase II · Adaptación Contemporánea",
+                title: "La Metamorfosis Moral",
+                desc: "Traducción moral para el siglo XXI. Tomamos los pilares conceptuales clásicos y los sometimos a debates críticos de nuestro entorno. ¿Sigue siendo la Hormiga ejemplar o su rigor roza la falta de empatía hoy?",
+                quote: "«Adaptar la fábula es el arte de cantar mientras recolectamos el grano. La sabiduría actual exige equilibrio, no sacrificios ciegos.» — Ecos de Papel",
+                outcomes: [
+                    { label: "Fábulas Adaptadas", value: "3 Escritos Nuevos" },
+                    { label: "Debates de Aula", value: "12 Sesiones Críticas" },
+                    { label: "Enfoque Principal", value: "Salud Mental y Economía Creativa" }
+                ],
+                achievement: "Redacción colectiva de la fábula adaptada 'La Cigarra y la Hormiga: La Nueva Alianza', enfocada en el valor del arte y el cuidado mutuo."
+            },
+            3: {
+                kicker: "Fase III · Oficio Gráfico y Web",
+                title: "Páginas de Luz (Diseño)",
+                desc: "Construcción visual y técnica de nuestra marca. Diseñamos con un código estricto de estética 'Dark Academia': paletas de pergamino, bordes grabados a mano, florones e interfaces dinámicas con tecnología moderna.",
+                quote: "«El diseño editorial no decora la idea; la enmarca y la dota de un templo donde habitar con la solemnidad del ayer.» — Cátedra de Estilo",
+                outcomes: [
+                    { label: "Prototipos UI", value: "4 Diseños Clave" },
+                    { label: "Paleta de Color", value: "Papel, Sepia, Oro, Oliva" },
+                    { label: "Interactividad", value: "HTML5 Canvas y Formularios" }
+                ],
+                achievement: "Consolidación de código optimizado, responsivo y adaptativo sin dependencias externas pesadas para un rendimiento inmediato."
+            },
+            4: {
+                kicker: "Fase IV · Despliegue y Comunidad",
+                title: "El Sello de Lacre Colectivo",
+                desc: "Lanzamiento y socialización. Abrimos el 'Muro de los Ecos' a toda la comunidad escolar para recolectar firmas, votos intelectuales y opiniones individuales grabadas de forma permanente sobre las fábulas.",
+                quote: "«Tu pensamiento es el último eco que completa nuestro papel. Deja tu lacre impreso para los lectores del mañana.» — El Consorcio",
+                outcomes: [
+                    { label: "Ecos Recibidos", value: "250+ Reflexiones" },
+                    { label: "Índice de Votantes", value: "92% de la Comunidad" },
+                    { label: "Sellos Descargados", value: "85 Sellos QR Únicos" }
+                ],
+                achievement: "Exposición física y digital interactiva en el aula donde alumnos de otros cursos interactuaron con el muro virtual en tiempo real."
+            }
+        };
+
+        // Cambiar dinámicamente de etapa y animar transiciones
+        function switchStage(stageNum) {
+            const display = document.getElementById("content-display");
+            const progressBar = document.getElementById("progress-bar-indicator");
+            const statusLabel = document.getElementById("progress-status-label");
+            const data = stagesData[stageNum];
+
+            // 1. Quitar las clases activas visuales de todos los hitos de la línea de tiempo
+            document.querySelectorAll(".milestone-item").forEach(item => {
+                item.classList.remove("border-l-4", "border-gold", "pl-2", "scale-102");
+                item.querySelector("div").classList.remove("bg-paper-card", "border-gold/60");
+                item.querySelector("span").classList.remove("border-gold", "scale-125");
+                item.querySelector("span span").classList.remove("bg-gold");
+            });
+
+            // 2. Activar visualmente el hito pulsado
+            const activeItem = document.getElementById(`milestone-${stageNum}`);
+            activeItem.classList.add("border-l-4", "border-gold", "pl-2");
+            activeItem.querySelector("div").classList.add("bg-paper-card", "border-gold/60");
+            activeItem.querySelector("span").classList.add("border-gold", "scale-125");
+            activeItem.querySelector("span span").classList.add("bg-gold");
+
+            // 3. Animación de salida (fade out) de la columna de detalles
+            display.style.opacity = "0";
+            display.style.transform = "translateY(12px)";
+
+            // 4. Inyectar los datos y realizar la animación de entrada (fade in)
+            setTimeout(() => {
+                display.innerHTML = `
+                    <span class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-2 block font-serifBody italic">${data.kicker}</span>
+                    <h2 class="font-serifTitle text-2xl md:text-3xl text-olive font-semibold mb-4 leading-tight">${data.title}</h2>
+                    <p class="text-sepia-muted text-sm md:text-base leading-relaxed mb-6 text-justify">${data.desc}</p>
+                    
+                    <!-- Cita poética editorial -->
+                    <div class="border-l-2 border-gold pl-4 py-1 my-6 italic text-sepia-dark text-xs md:text-sm bg-paper/30 rounded-r">
+                        ${data.quote}
+                    </div>
+
+                    <!-- Cuadrícula con resultados o métricas de la fase -->
+                    <h4 class="text-xs uppercase tracking-wider text-sepia-dark font-semibold mb-3">Avance Histórico de Fase:</h4>
+                    <div class="grid grid-cols-3 gap-3 mb-6">
+                        ${data.outcomes.map(out => `
+                            <div class="bg-paper border border-sepia-border/40 p-3 rounded text-center">
+                                <span class="text-[10px] md:text-xs uppercase tracking-wider text-sepia-muted block mb-1">${out.label}</span>
+                                <strong class="font-serifTitle text-sm md:text-base text-olive block">${out.value}</strong>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Logro principal -->
+                    <div class="bg-olive/5 border border-olive/20 p-4 rounded text-xs md:text-sm flex gap-3">
+                        <i class="fa-solid fa-medal text-gold text-lg shrink-0 mt-0.5"></i>
+                        <p class="text-sepia-muted"><strong class="text-olive">Logro Mayor:</strong> ${data.achievement}</p>
+                    </div>
+                `;
+
+                // Restablecer estilos de animación de entrada
+                display.style.opacity = "1";
+                display.style.transform = "translateY(0px)";
+
+                // Actualizar barra de progreso inferior
+                const pct = stageNum * 25;
+                progressBar.style.width = `${pct}%`;
+                
+                // Actualizar etiqueta del estado de avance
+                if(stageNum === 4) {
+                    statusLabel.innerText = "Proyecto Culminado";
+                    statusLabel.classList.remove("text-olive");
+                    statusLabel.classList.add("text-gold");
+                } else {
+                    statusLabel.innerText = "Fase Concluida";
+                    statusLabel.classList.remove("text-gold");
+                    statusLabel.classList.add("text-olive");
+                }
+
+            }, 400);
+        }
+
+        // Inicializar por defecto la Fase 1 al cargar la página
+        window.onload = function() {
+            switchStage(1);
+        };
+    </script>
+</body>
+</html>
